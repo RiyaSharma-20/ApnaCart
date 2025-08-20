@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Success - ApnaCart</title>
+  <link rel="stylesheet" href="../css/index.css">
+  <style>
+    body {
+      background: #f6f8fa;
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .success-box {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .success-box img {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+
+    .success-box h2 {
+      color: #2ecc71;
+      margin-bottom: 10px;
+    }
+
+    .success-box p {
+      color: #555;
+      margin: 8px 0;
+    }
+
+    .success-details {
+      text-align: left;
+      margin-top: 20px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .success-details p {
+      margin: 6px 0;
+    }
+
+    .btn-home {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #2ecc71;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .btn-home:hover {
+      background: #27ae60;
+    }
+  </style>
+</head>
+<body>
+  <div class="success-box">
+    <img src="../images/success_logo.png" alt="Success">
+    <h2>🎉 Order Placed Successfully!</h2>
+    <p>Thank you for shopping with <b>ApnaCart</b>. Your order details are below:</p>
+
+    <div class="success-details" id="orderDetails"></div>
+
+    <a href="../index.html" class="btn-home">Continue Shopping</a>
+  </div>
+
+  <script>
+    // Retrieve order details from localStorage
+  const orderData = JSON.parse(localStorage.getItem("lastOrder"));
+
+  if(orderData){
+    document.getElementById("orderDetails").innerHTML = `
+      <p><b>Name:</b> ${orderData.name}</p>
+      <p><b>Email:</b> ${orderData.email}</p>
+      <p><b>Phone:</b> ${orderData.phone}</p>
+      <p><b>Address:</b> ${orderData.address}</p>
+      <p><b>Payment:</b> ${orderData.payment}</p>
+      <p><b>Total:</b> ₹${orderData.total}</p>
+    `;
+
+    // ✅ clear cart AFTER showing
+    localStorage.removeItem("bagItems");
+    localStorage.removeItem("lastOrder");
+  } else {
+    document.getElementById("orderDetails").innerHTML = `
+      <p>No order found. Please go back to <a href="../index.html">home</a>.</p>
+    `;
+  }
+
+  </script>
+</body>
+</html>

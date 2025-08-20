@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApnaCart — Bag</title>
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/bag.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo_container">
+      <a href="index.html" class="brand-link" aria-label="ApnaCart Home">
+        <img class="brand_logo" src="../images/apnacart-logo.svg" alt="ApnaCart Logo" />
+      </a>
+    </div>
+    <nav class="nav_bar" aria-label="Primary">
+      <a href="../index.html">Men</a>
+      <a href="../index.html">Women</a>
+      <a href="../index.html">Electronics</a>
+      <a href="../index.html">Home</a>
+      <a href="../index.html">Beauty</a>
+      <a href="../index.html" class="pill">Deals</a>
+    </nav>
+    <div class="search_bar" role="search">
+      <span class="material-symbols-outlined search_icon">search</span>
+      <input class="search_input" placeholder="Search on ApnaCart…" aria-label="Search products" />
+    </div>
+    <div class="action_bar">
+      <a class="action_container" href="../pages/signup.html" id="profileLink">
+        <span class="material-symbols-outlined action_icon">person</span>
+        <span class="action_name">Profile</span>
+      </a>
+      <div class="action_container">
+        <span class="material-symbols-outlined action_icon">favorite</span>
+        <span class="action_name">Wishlist</span>
+      </div>
+      <a class="action_container" href="bag.html">
+        <span class="material-symbols-outlined action_icon">shopping_bag</span>
+        <span class="action_name">Bag</span>
+        <span class="bag-item-count">0</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="bag-page">
+      <div class="bag-items-container"></div>
+      <div class="bag-summary"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer_container">
+      <div class="footer_column">
+        <h3>SHOP</h3>
+        <a href="#">Men</a>
+        <a href="#">Women</a>
+        <a href="#">Kids</a>
+        <a href="#">Electronics</a>
+        <a href="#">Home & Living</a>
+      </div>
+      <div class="footer_column">
+        <h3>HELP</h3>
+        <a href="#">Customer Support</a>
+        <a href="#">Returns & Refunds</a>
+        <a href="#">Track Order</a>
+        <a href="#">Shipping</a>
+      </div>
+      <div class="footer_column">
+        <h3>ABOUT</h3>
+        <a href="#">ApnaCart Insider</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <hr />
+    <div class="copyright">© 2025 ApnaCart. All rights reserved.</div>
+  </footer>
+
+  <!-- keep add-to-cart logic intact -->
+  <script src="../data/items.js"></script>
+  <script src="../scripts/index.js"></script>
+  <script src="../scripts/bag.js"></script>
+
+  <!-- If you have a dedicated bag.js, include it below -->
+  <!-- <script src="bag.js"></script> -->
+</body>
+</html>

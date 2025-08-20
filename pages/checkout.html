@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApnaCart — Checkout</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/bag.css">
+
+  <style>
+    body {
+      background: #f6f8fa;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    main {
+      display: flex;
+      gap: 25px;
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .checkout-box {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .checkout-form {
+      flex: 2;
+    }
+
+    .checkout-form h2 {
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    .checkout-form label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .checkout-form input,
+    .checkout-form textarea,
+    .checkout-form select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border 0.2s ease;
+    }
+
+    .checkout-form input:focus,
+    .checkout-form textarea:focus,
+    .checkout-form select:focus {
+      border-color: #2ecc71;
+      outline: none;
+    }
+
+    .checkout-form button {
+      background: #2ecc71;
+      border: none;
+      color: #fff;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+      transition: background 0.3s ease;
+    }
+
+    .checkout-form button:hover {
+      background: #27ae60;
+    }
+
+    .order-summary {
+      flex: 1;
+    }
+
+    .order-summary h3 {
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .order-total {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 16px;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo_container">
+    <a href="../index.html">
+      <img class="brand_logo" src="../images/apnacart-logo.svg" alt="ApnaCart Logo">
+    </a>
+  </div>
+  <nav class="nav_bar">
+    <a href="../index.html">Home</a>
+    <a href="../index.html">Men</a>
+    <a href="../index.html">Women</a>
+    <a href="../index.html">Electronics</a>
+    <a href="../index.html">Beauty</a>
+    <a href="../index.html">Home</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Checkout Form -->
+  <div class="checkout-box checkout-form">
+    <h2>Checkout</h2>
+    <form id="checkoutForm">
+      <label>Full Name</label>
+      <input type="text" name="name" required placeholder="Enter your name">
+
+      <label>Email Address</label>
+      <input type="email" name="email" required placeholder="Enter your email">
+
+      <label>Phone Number</label>
+      <input type="tel" name="phone" required placeholder="Enter phone number">
+
+      <label>Delivery Address</label>
+      <textarea name="address" rows="3" required placeholder="Enter your address"></textarea>
+
+      <label>Payment Method</label>
+      <select name="payment" required>
+        <option value="">Select Payment Method</option>
+        <option value="COD">Cash on Delivery</option>
+        <option value="Card">Credit/Debit Card</option>
+        <option value="UPI">UPI</option>
+      </select>
+
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+
+  <!-- Cart Summary -->
+  <div class="checkout-box order-summary">
+    <h3>Your Order</h3>
+    <div id="checkoutCartItems"></div>
+    <div class="order-total">
+      <span>Total</span>
+      <span id="checkoutTotal"></span>
+    </div>
+  </div>
+</main>
+
+<!-- Scripts -->
+<script src="../data/items.js"></script>
+
+<script>
+  (function () {
+    const itemsArr = (typeof items !== 'undefined' && Array.isArray(items)) ? items : [];
+
+    const checkoutCartItems = document.getElementById('checkoutCartItems');
+    const checkoutTotal = document.getElementById('checkoutTotal');
+
+    // Read cart IDs
+    let bagItems = JSON.parse(localStorage.getItem('bagItems') || '[]');
+
+    // Map IDs -> item objects safely (string-compare) and drop unfound ones
+    let bagItemObjects = bagItems
+      .map(id => itemsArr.find(it => String(it.id) === String(id)))
+      .filter(Boolean);
+
+    function renderCheckoutCart() {
+      let total = 0;
+      checkoutCartItems.innerHTML = '';
+
+      if (bagItemObjects.length === 0) {
+        checkoutCartItems.innerHTML = '<p>Your cart is empty.</p>';
+      } else {
+        for (const item of bagItemObjects) {
+          total += Number(item.current_price) || 0;
+          checkoutCartItems.innerHTML += `
+            <div class="order-item">
+              <span>${item.item_name}</span>
+              <span>₹${item.current_price}</span>
+            </div>
+          `;
+        }
+      }
+      checkoutTotal.textContent = total.toString();
+    }
+
+    renderCheckoutCart();
+
+    // Submit -> save order -> go to success.html (same folder)
+    document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (bagItemObjects.length === 0) {
+        alert('Your cart is empty.');
+        return;
+      }
+
+      const fd = new FormData(this);
+      const orderData = {
+        name: fd.get('name'),
+        email: fd.get('email'),
+        phone: fd.get('phone'),
+        address: fd.get('address'),
+        payment: fd.get('payment'),
+        total: checkoutTotal.textContent
+      };
+
+      localStorage.setItem('lastOrder', JSON.stringify(orderData));
+      window.location.href = 'success.html'; // same folder redirect
+    });
+  })();
+</script>
+
+</body>
+</html>
+

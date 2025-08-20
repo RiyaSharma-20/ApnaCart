@@ -1,0 +1,16 @@
+<svg width="180" height="48" viewBox="0 0 180 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ApnaCart">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="180" height="48" rx="10" fill="white"/>
+  <g transform="translate(8,9)">
+    <circle cx="14" cy="15" r="14" fill="url(#g)"/>
+    <path d="M7 16h14l-2 8H9l-2-8z M9 9h10l1.2 4H7.8L9 9z" fill="white" opacity="0.95"/>
+  </g>
+  <text x="58" y="31" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="22" font-weight="800" fill="#0f172a">
+    Apna<tspan fill="#22c55e">Cart</tspan>
+  </text>
+</svg>
